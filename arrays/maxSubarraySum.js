@@ -33,7 +33,7 @@
  */
 var maxSubArray1 = function (nums) {
   let n = nums.length;
-  let maxSubArraySum = Number.MIN_SAFE_INTEGER;
+  let maxSubArraySum = -Infinity;
 
   for (let i = 0; i < n; i++) {
     for (let j = i; j < n; j++) {
@@ -58,7 +58,7 @@ var maxSubArray1 = function (nums) {
  */
 var maxSubArray2 = function (nums) {
   let n = nums.length;
-  let maxSubArraySum = Number.MIN_SAFE_INTEGER;
+  let maxSubArraySum = -Infinity;
 
   for (let i = 0; i < n; i++) {
     let subArraySum = 0;
@@ -80,7 +80,7 @@ var maxSubArray2 = function (nums) {
  */
 var maxSubArray3 = function (nums) {
   let n = nums.length;
-  let maxSubArraySum = Number.MIN_SAFE_INTEGER;
+  let maxSubArraySum = -Infinity;
   let tempSum = 0;
 
   for (let i = 0; i < n; i++) {
@@ -126,7 +126,7 @@ var maxSubArray4 = function (nums) {
  * @param {number[]} nums
  * Kadane's algorithm
  * Time complexity => O(n log n)
- * Space complexity => O(1)
+ * Space complexity => O(log n)
  * @return {number}
  */
 var maxSubArray5 = function (nums) {
@@ -134,6 +134,8 @@ var maxSubArray5 = function (nums) {
 };
 
 function divideAndConquer(nums, left, right) {
+  if (left > right) return -Infinity;
+
   if (left === right) return nums[left];
 
   const mid = Math.floor((left + right) / 2);
