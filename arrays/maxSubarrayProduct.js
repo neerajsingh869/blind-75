@@ -25,13 +25,13 @@
  * Space complexity => O(1)
  * @return {number}
  */
-var maxProduct1 = function(nums) {
+var maxProduct1 = function (nums) {
   let ans = -Infinity;
 
   for (let i = 0; i < nums.length; i++) {
     for (let j = i; j < nums.length; j++) {
       let tempProduct = 1;
-      
+
       for (let k = i; k <= j; k++) {
         tempProduct *= nums[k];
       }
@@ -49,7 +49,7 @@ var maxProduct1 = function(nums) {
  * Space complexity => O(1)
  * @return {number}
  */
-var maxProduct2 = function(nums) {
+var maxProduct2 = function (nums) {
   let ans = -Infinity;
 
   for (let i = 0; i < nums.length; i++) {
@@ -59,6 +59,68 @@ var maxProduct2 = function(nums) {
 
       ans = Math.max(ans, tempProduct);
     }
+  }
+
+  return ans;
+};
+
+/**
+ * @param {number[]} nums
+ * Time complexity => O(n)
+ * Space complexity => O(1)
+ * REF: https://takeuforward.org/data-structure/maximum-product-subarray-in-an-array/
+ * @return {number}
+ */
+var maxProduct3 = function (nums) {
+  let ans = -Infinity;
+
+  let prefixProd = 1;
+  let suffixProd = 1;
+  for (let i = 0; i < nums.length; i++) {
+    if (prefixProd === 0) prefixProd = 1;
+    if (suffixProd === 0) suffixProd = 1;
+
+    prefixProd *= nums[i];
+    suffixProd *= nums[nums.length - 1 - i];
+
+    ans = Math.max(ans, prefixProd, suffixProd);
+  }
+
+  return ans;
+};
+
+/**
+ * @param {number[]} nums
+ * Time complexity => O(n)
+ * Space complexity => O(1)
+ * KEY IDEA: Track both the maximum product and minimum product at
+ * each index because a negative number can flip the result.
+ * @return {number}
+ */
+var maxProduct4 = function (nums) {
+  let ans = -Infinity;
+
+  let maxSoFar = nums[0];
+  let minSoFar = nums[0];
+  ans = maxSoFar;
+  for (let i = 1; i < nums.length; i++) {
+    let currentEle = nums[i];
+
+    let tempMax = Math.max(
+      currentEle,
+      currentEle * maxSoFar,
+      currentEle * minSoFar
+    );
+    let tempMin = Math.min(
+      currentEle,
+      currentEle * maxSoFar,
+      currentEle * minSoFar
+    );
+
+    maxSoFar = tempMax;
+    minSoFar = tempMin;
+
+    ans = Math.max(ans, maxSoFar);
   }
 
   return ans;
