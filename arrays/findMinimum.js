@@ -71,11 +71,11 @@ var findMin2 = function (nums) {
  */
 var findMin3 = function (nums) {
   let n = nums.length;
-  let start = 0;
-  let end = n - 1;
+  let low = 0;
+  let high = n - 1;
 
-  while (start <= end) {
-    let mid = start + Math.floor((end - start) / 2);
+  while (low <= high) {
+    let mid = low + Math.floor((high - low) / 2);
 
     if (
       nums[mid] <= nums[(mid + 1) % n] &&
@@ -83,12 +83,12 @@ var findMin3 = function (nums) {
     ) {
       return nums[mid];
     } else if (
-      (nums[mid] <= nums[end] && nums[mid] >= nums[start]) ||
-      (nums[mid] <= nums[end] && nums[mid] <= nums[start])
+      (nums[mid] <= nums[high] && nums[mid] >= nums[low]) ||
+      (nums[mid] <= nums[high] && nums[mid] <= nums[low])
     ) {
-      end = mid - 1;
+      high = mid - 1;
     } else {
-      start = mid + 1;
+      low = mid + 1;
     }
   }
 
@@ -105,26 +105,26 @@ var findMin3 = function (nums) {
 var findMin4 = function(nums) {
   let n = nums.length;
 
-  let start = 0;
-  let end = n - 1;
+  let low = 0;
+  let high = n - 1;
   let ans = Infinity;
 
-  while (start <= end) {
-      let mid = start + Math.floor((end - start) / 2);
+  while (low <= high) {
+      let mid = low + Math.floor((high - low) / 2);
 
       // if left part is sorted
-      if (nums[start] <= nums[mid]) {
+      if (nums[low] <= nums[mid]) {
           // Keep the minimum:
-          ans = Math.min(ans, nums[start]);
+          ans = Math.min(ans, nums[low]);
 
           // Eliminate left half:
-          start = mid + 1;
+          low = mid + 1;
       } else {  // if right part is sorted
           // Keep the minimum:
           ans = Math.min(ans, nums[mid]);
 
           // Eliminate right half:
-          end = mid - 1;
+          high = mid - 1;
       }
   }
 
@@ -141,34 +141,34 @@ var findMin4 = function(nums) {
 var findMin5 = function(nums) {
   let n = nums.length;
 
-  let start = 0;
-  let end = n - 1;
+  let low = 0;
+  let high = n - 1;
   let ans = Infinity;
 
-  while (start <= end) {
-      let mid = start + Math.floor((end - start) / 2);
+  while (low <= high) {
+      let mid = low + Math.floor((high - low) / 2);
 
       // search space is already sorted
-      // then nums[start] will always be
+      // then nums[low] will always be
       // the minimum in that search space:
-      if (nums[end] >= nums[start]) {
-        ans = Math.min(ans, nums[start]);
+      if (nums[high] >= nums[low]) {
+        ans = Math.min(ans, nums[low]);
         break;
       }
 
       // if left part is sorted
-      if (nums[start] <= nums[mid]) {
+      if (nums[low] <= nums[mid]) {
           // Keep the minimum:
-          ans = Math.min(ans, nums[start]);
+          ans = Math.min(ans, nums[low]);
           
           // Eliminate left half:
-          start = mid + 1;
+          low = mid + 1;
       } else {  // if right part is sorted
           // Keep the minimum:
           ans = Math.min(ans, nums[mid]);
           
           // Eliminate right half:
-          end = mid - 1;
+          high = mid - 1;
       }
   }
 
