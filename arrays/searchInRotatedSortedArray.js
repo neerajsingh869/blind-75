@@ -208,7 +208,7 @@ var search3 = function (nums, target) {
  * SC = O(1)
  * @return {number}
  */
-var search = function (nums, target) {
+var search4 = function (nums, target) {
   let n = nums.length;
   let low = 0;
   let high = nums.length - 1;
