@@ -72,7 +72,7 @@
 var search1 = function (nums, target) {
   let n = nums.length;
   let low = 0;
-  let high = nums.length - 1;
+  let high = n - 1;
 
   while (low <= high) {
     let mid = low + Math.floor((high - low) / 2);
@@ -129,7 +129,7 @@ var search1 = function (nums, target) {
 var search2 = function (nums, target) {
   let n = nums.length;
   let low = 0;
-  let high = nums.length - 1;
+  let high = n - 1;
 
   while (low <= high) {
     let mid = low + Math.floor((high - low) / 2);
@@ -172,7 +172,7 @@ var search2 = function (nums, target) {
 var search3 = function (nums, target) {
   let n = nums.length;
   let low = 0;
-  let high = nums.length - 1;
+  let high = n - 1;
 
   while (low <= high) {
     let mid = low + Math.floor((high - low) / 2);
@@ -211,7 +211,7 @@ var search3 = function (nums, target) {
 var search4 = function (nums, target) {
   let n = nums.length;
   let low = 0;
-  let high = nums.length - 1;
+  let high = n - 1;
 
   while (low <= high) {
     let mid = low + Math.floor((high - low) / 2);
@@ -233,6 +233,41 @@ var search4 = function (nums, target) {
         high = mid - 1;
       } else {
         low = mid + 1;
+      }
+    }
+  }
+
+  return -1;
+};
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * TC = O(log(n))
+ * SC = O(1)
+ * @return {number}
+ */
+var search4 = function (nums, target) {
+  let n = nums.length;
+  let low = 0;
+  let high = n - 1;
+
+  while (low <= high) {
+    let mid = low + Math.floor((low - mid) / 2);
+
+    if (target === nums[mid]) return mid;
+
+    if (nums[mid] >= nums[low]) {
+      if (target >= nums[low] && target < nums[mid]) {
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
+    } else {
+      if (target <= nums[high] && target > nums[mid]) {
+        low = mid + 1;
+      } else {
+        high = mid - 1;
       }
     }
   }
