@@ -69,31 +69,23 @@
 
 /**
  * @param {number[]} height
- * TC = O(n)
+ * TC = O(n * n)
  * SC = O(1)
- * @return {number}
+ * @returns {number}
  */
-var maxArea = function(height) {
-  let n = height.length;
-  let ans = -Infinity;
+var maxArea1 = function(height) {
+    const n = height.length;
 
-  let start = 0;
-  let end = n - 1;
-  while (start < end) {
-      let length = end - start;
-      let breadth = Math.min(height[start], height[end]);
+    let ans = 0;
 
-      if (breadth === height[start]) {
-          start++;
-      } else {
-          end--;
-      }
+    for (let start = 0; start < n; start++) {
+        for (let end = start + 1; end < n; end++) {
+            ans = Math.max(ans, (end - start) * Math.min(height[start], height[end]));
+        }
+    }
 
-      ans = Math.max(ans, length * breadth);
-  }
-
-  return ans;
-};
+    return ans;
+}
 
 // 5. O -> Optimization
 
@@ -103,7 +95,35 @@ var maxArea = function(height) {
  * SC = O(1)
  * @return {number}
  */
-var maxArea = function(height) {
+var maxArea2 = function(height) {
+    let n = height.length;
+    let ans = -Infinity;
+  
+    let start = 0;
+    let end = n - 1;
+    while (start < end) {
+        let length = end - start;
+        let breadth = Math.min(height[start], height[end]);
+  
+        if (breadth === height[start]) {
+            start++;
+        } else {
+            end--;
+        }
+  
+        ans = Math.max(ans, length * breadth);
+    }
+  
+    return ans;
+  };
+
+/**
+ * @param {number[]} height
+ * TC = O(n)
+ * SC = O(1)
+ * @return {number}
+ */
+var maxArea3 = function(height) {
   let n = height.length;
   let ans = -Infinity;
 
