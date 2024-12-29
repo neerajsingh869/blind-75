@@ -35,7 +35,7 @@
   0 <= height[i] <= 104
  */
 
-  /**
+/**
  * 2. A - Think about different approaches to solve the problem
  *          a) Brute force: Use 2 nested loops. Outer loop will fix
  *              one end and inner loop will move from that end onwards.
@@ -45,22 +45,22 @@
  *              Keep repeating the same procedure for rest of possible cases
  *                TC = O(n * n) SC = O(1)
  *          b) Better approach: Use 2 pointers approach to solve the problem.
- *              Algorithm: 
- *                - Initialize 2 variables, let's say start and end. 
- *                - Point start to first element and end to last element. 
- *                - Initialize one variable for storing the answer, 
- *                  let's says the name is maxArea. 
- *                - Calculate the length of the area occupied by 
- *                  water (end - start) and breadth (min of height[start] and height[end]). 
- *                  Storing the maximum of previous maxArea and current area 
- *                  occupied by water (i.e length * breadth) in maxArea variable. 
- *                - Once this is done, figure out if height[start] was minimum or 
- *                  height[end] was minimum. If height[start] was minimum, then increment start 
- *                  pointer so that area of water occupation can be increased. 
- *                  Same goes for height[end], here instead of incrementing the pointer, 
- *                   decrement the pointer. 
- *                - Calculate the area again and repeat the process of moving 
- *                  pointers till start < end. 
+ *              Algorithm:
+ *                - Initialize 2 variables, let's say start and end.
+ *                - Point start to first element and end to last element.
+ *                - Initialize one variable for storing the answer,
+ *                  let's says the name is maxArea.
+ *                - Calculate the length of the area occupied by
+ *                  water (end - start) and breadth (min of height[start] and height[end]).
+ *                  Storing the maximum of previous maxArea and current area
+ *                  occupied by water (i.e length * breadth) in maxArea variable.
+ *                - Once this is done, figure out if height[start] was minimum or
+ *                  height[end] was minimum. If height[start] was minimum, then increment start
+ *                  pointer so that area of water occupation can be increased.
+ *                  Same goes for height[end], here instead of incrementing the pointer,
+ *                   decrement the pointer.
+ *                - Calculate the area again and repeat the process of moving
+ *                  pointers till start < end.
  *                TC = O(n) SC = O(1)
  */
 
@@ -73,19 +73,19 @@
  * SC = O(1)
  * @returns {number}
  */
-var maxArea1 = function(height) {
-    const n = height.length;
+var maxArea1 = function (height) {
+  const n = height.length;
 
-    let ans = 0;
+  let ans = 0;
 
-    for (let start = 0; start < n; start++) {
-        for (let end = start + 1; end < n; end++) {
-            ans = Math.max(ans, (end - start) * Math.min(height[start], height[end]));
-        }
+  for (let start = 0; start < n; start++) {
+    for (let end = start + 1; end < n; end++) {
+      ans = Math.max(ans, (end - start) * Math.min(height[start], height[end]));
     }
+  }
 
-    return ans;
-}
+  return ans;
+};
 
 // 5. O -> Optimization
 
@@ -95,27 +95,27 @@ var maxArea1 = function(height) {
  * SC = O(1)
  * @return {number}
  */
-var maxArea2 = function(height) {
-    let n = height.length;
-    let ans = -Infinity;
-  
-    let start = 0;
-    let end = n - 1;
-    while (start < end) {
-        let length = end - start;
-        let breadth = Math.min(height[start], height[end]);
-  
-        if (breadth === height[start]) {
-            start++;
-        } else {
-            end--;
-        }
-  
-        ans = Math.max(ans, length * breadth);
+var maxArea2 = function (height) {
+  let n = height.length;
+  let ans = -Infinity;
+
+  let start = 0;
+  let end = n - 1;
+  while (start < end) {
+    let length = end - start;
+    let breadth = Math.min(height[start], height[end]);
+
+    if (breadth === height[start]) {
+      start++;
+    } else {
+      end--;
     }
-  
-    return ans;
-  };
+
+    ans = Math.max(ans, length * breadth);
+  }
+
+  return ans;
+};
 
 /**
  * @param {number[]} height
@@ -123,22 +123,22 @@ var maxArea2 = function(height) {
  * SC = O(1)
  * @return {number}
  */
-var maxArea3 = function(height) {
+var maxArea3 = function (height) {
   let n = height.length;
   let ans = -Infinity;
 
   let start = 0;
   let end = n - 1;
   while (start < end) {
-      let length = end - start;
+    let length = end - start;
 
-      if (height[start] < height[end]) {
-          ans = Math.max(ans, length * height[start]);
-          start++;
-      } else {
-          ans = Math.max(ans, length * height[end]);
-          end--;
-      }
+    if (height[start] < height[end]) {
+      ans = Math.max(ans, length * height[start]);
+      start++;
+    } else {
+      ans = Math.max(ans, length * height[end]);
+      end--;
+    }
   }
 
   return ans;
