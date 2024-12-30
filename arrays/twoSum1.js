@@ -50,7 +50,7 @@ var twoSum1 = function (nums, target) {
     }
   }
 
-  return null;
+  return [];
 };
 
 /**
@@ -85,7 +85,7 @@ var twoSum2 = function (nums, target) {
     }
   }
 
-  return null;
+  return [];
 };
 
 /**
@@ -100,7 +100,10 @@ var twoSum3 = function (nums, target) {
 
   let map = new Map();
   for (let i = 0; i < n; i++) {
-    map.set(nums[i], i);
+    // Store smallest index for repeating number
+    if (!map.has(nums[i])) {
+      map.set(nums[i], i);
+    }
   }
 
   for (let i = 0; i < n; i++) {
@@ -109,7 +112,7 @@ var twoSum3 = function (nums, target) {
     }
   }
 
-  return null;
+  return [];
 };
 
 /**
@@ -132,13 +135,15 @@ var twoSum4 = function (nums, target) {
     let complement = target - nums[i];
 
     if (map.has(complement)) {
-      return [i, map.get(complement)];
+      return [map.get(complement), i];
     }
 
-    map.set(nums[i], i);
+    if (!map.has(nums[i])) {
+      map.set(nums[i], i);
+    }
   }
 
-  return null;
+  return [];
 };
 
 /**
@@ -170,7 +175,7 @@ var twoSumDuplicate = function (nums, target) {
     map.get(nums[i]).push(i);
   }
 
-  return null;
+  return [];
 };
 
 /**
@@ -227,5 +232,5 @@ var twoSumSorted = function (nums, target) {
     }
   }
 
-  return null;
+  return [];
 };
