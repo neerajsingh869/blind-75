@@ -1,4 +1,13 @@
 /**
+ * RADIO framework
+ *  R => Read & Understand
+ *  A => Approaches (+ Intuition)
+ *  D => Design algorithms (Exact steps)
+ *  I => Implemention (Writing code & testing)
+ *  O => Optimizations (if any)
+ */
+
+/**
  * Given a non-negative integer n, write a function that takes the 
  * non-negative integer n and return an array result of size n + 1 
  * where result[i] represents the number of active bits (set bits to 1) 
@@ -33,7 +42,7 @@
  * SC = O(n)
  * @returns 
  */
-function bitCounting(n: number): number[] {
+function bitCounting1(n: number): number[] {
   let bitCounts: number[] = new Array(n + 1).fill(0);
 
   for (let i = 0; i <= n; i++) {
@@ -52,4 +61,50 @@ function getSetBitCount(n: number): number {
   }
 
   return count;
+}
+
+/**
+ * @param n 
+ * TC = O(n)
+ * SC = O(n)
+ * @returns 
+ */
+function bitCounting2(n: number): number[] {
+  let bitCounts: number[] = new Array(n + 1).fill(0);
+  
+  let x = 0;
+  let b = 1;
+  while (b <= n) {
+    while (x < b && (x + b) <= n) {
+      bitCounts[x + b] = bitCounts[x] + 1;
+      x++;
+    }
+    
+    x = 0;
+    b <<= 1;
+  }
+
+  return bitCounts;
+}
+
+/**
+ * @param n 
+ * TC = O(n)
+ * SC = O(n)
+ * @returns 
+ */
+function bitCounting3(n: number): number[] {
+  let bitCounts: number[] = new Array(n + 1).fill(0);
+  
+  for (let i = 1; i <= n; i++) {
+    const leastSignificantBit = i & 1;
+    /**
+     * INTUITION: Number of 1s in number i can be derived from
+     * number of 1s in number i/2 (right shifted value of i)
+     * and the least significant bit of i
+     */
+    bitCounts[i] = bitCounts[Math.floor(i / 2)] + leastSignificantBit;
+  }
+
+  return bitCounts;
 }
