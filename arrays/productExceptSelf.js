@@ -22,26 +22,27 @@ The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit int
 Follow up: Can you solve the problem in O(1) extra space complexity? 
 (The output array does not count as extra space for space complexity analysis.)
  */
+
 /**
  * @param {number[]} nums
  * Time complexity => O(n * n)
  * Space complexity => O(1)
  * @return {number[]}
  */
-var productExceptSelf1 = function(nums) {
+var productExceptSelf1 = function (nums) {
   let n = nums.length;
   let ans = [];
-  
+
   for (let i = 0; i < n; i++) {
-      let tempVar = 1;
+    let tempVar = 1;
 
-      for (let j = 0; j < n; j++) {
-          if (i != j) {
-              tempVar *= nums[j];
-          }
+    for (let j = 0; j < n; j++) {
+      if (i != j) {
+        tempVar *= nums[j];
       }
+    }
 
-      ans.push(tempVar);
+    ans.push(tempVar);
   }
 
   return ans;
@@ -53,21 +54,49 @@ var productExceptSelf1 = function(nums) {
  * Space complexity => O(1) {ignore the output}
  * @return {number[]}
  */
-var productExceptSelf = function(nums) {
+var productExceptSelf2 = function (nums) {
   let n = nums.length;
   let ans = [];
 
   let tempVar = 1;
   for (let i = 0; i < n; i++) {
-      ans.push(tempVar);
-      tempVar *= nums[i]; 
+    ans.push(tempVar);
+    tempVar *= nums[i];
   }
 
   tempVar = 1;
   for (let i = n - 1; i >= 0; i--) {
-      ans[i] *= tempVar;
-      tempVar *= nums[i];
+    ans[i] *= tempVar;
+    tempVar *= nums[i];
   }
 
   return ans;
+};
+
+/**
+ * @param {number[]} nums
+ * Time complexity => O(n)
+ * Space complexity => O(1) {ignore the output}
+ * @return {number[]}
+ */
+var productExceptSelf3 = function (nums) {
+  if (numbers.length <= 1) return [];
+
+  const result = new Array(numbers.length).fill(1);
+
+  // Left to right products
+  let leftProduct = 1;
+  for (let i = 0; i < numbers.length; i++) {
+    result[i] = leftProduct;
+    leftProduct *= numbers[i];
+  }
+
+  // Right to left products and combining
+  let rightProduct = 1;
+  for (let i = numbers.length - 1; i >= 0; i--) {
+    result[i] *= rightProduct;
+    rightProduct *= numbers[i];
+  }
+
+  return result;
 };
