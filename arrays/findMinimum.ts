@@ -1,59 +1,55 @@
 /**
- * Suppose an array of length n sorted in ascending order is 
- * rotated between 1 and n times. For example, 
- * the array nums = [0,1,2,4,5,6,7] might become:
+ * PRODUCT LINK: https://www.greatfrontend.com/interviews/study/blind75/questions/algo/array-smallest-in-rotated
+ * 
+ * Given a sorted and rotated array numbers containing unique elements, 
+ * find and return the minimum element in this array.
 
-    [4,5,6,7,0,1,2] if it was rotated 4 times.
-    [0,1,2,4,5,6,7] if it was rotated 7 times.
-    Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 
-    1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+  Rotating an array [a[0], a[1], a[2], ..., a[n-1]] once results 
+  in [a[n-1], a[0], a[1], a[2], ..., a[n-2]]. Rotating it a second time 
+  results in [a[n-2], a[n-1], a[0], a[1], ..., a[n-3]].
 
-  Given the sorted rotated array nums of unique elements, 
-  return the minimum element of this array.
+  Develop an algorithm that runs in O(log n) time complexity.
 
-  You must write an algorithm that runs in O(log n) time.
-  
-  Example 1:
-  Input: nums = [3,4,5,1,2]
+  Input
+  numbers: number[]: An array of integers
+
+  Examples
+  Input: numbers = [1,2,3,4]
   Output: 1
-  Explanation: The original array was [1,2,3,4,5] rotated 3 times.
+  Explanation: The original array [1,2,3,4] was rotated 0 times
 
-  Example 2:
-  Input: nums = [4,5,6,7,0,1,2]
-  Output: 0
-  Explanation: The original array was [0,1,2,4,5,6,7] and it was rotated 4 times.
+  Input: numbers = [3,4,1,2]
+  Output: 1
+  Explanation: The original array [1,2,3,4] was rotated 2 times
 
-  Example 3:
-  Input: nums = [11,13,15,17]
-  Output: 11
-  Explanation: The original array was [11,13,15,17] and it was rotated 4 times. 
+  Input: numbers = [6,7,8,-5,-4,2]
+  Output: -5
+  Explanation: The original array [-5,-4,2,6,7,8] was rotated 3 times.
 
-  Constraints:
-  n == nums.length
-  1 <= n <= 5000
-  -5000 <= nums[i] <= 5000
-  All the integers of nums are unique.
-  nums is sorted and rotated between 1 and n times.
+  Constraints
+  1 <= numbers.length <= 1000
+  -10,000 <= numbers[i] <= 10,000
  */
+
 /**
- * @param {number[]} nums
+ * @param nums 
  * Time complexity => O(n * log(n))
  * Space complexity => O(1)
- * @return {number}
+ * @returns 
  */
-var findMin1 = function (nums) {
+var findMin1 = function (nums: number[]): number {
   nums.sort();
 
   return nums[0];
 };
 
 /**
- * @param {number[]} nums
+ * @param nums 
  * Time complexity => O(n)
  * Space complexity => O(1)
- * @return {number}
+ * @returns 
  */
-var findMin2 = function (nums) {
+var findMin2 = function (nums: number[]): number {
   let min = Infinity;
 
   for (let i = 0; i < nums.length; i++) {
@@ -64,12 +60,12 @@ var findMin2 = function (nums) {
 };
 
 /**
- * @param {number[]} nums
+ * @param nums 
  * Time complexity => O(log(n))
  * Space complexity => O(1)
- * @return {number}
+ * @returns 
  */
-var findMin3 = function (nums) {
+var findMin3 = function (nums: number[]): number {
   let n = nums.length;
   let low = 0;
   let high = n - 1;
@@ -96,13 +92,12 @@ var findMin3 = function (nums) {
 };
 
 /**
- * @param {number[]} nums
+ * @param nums 
  * Time complexity => O(log(n))
  * Space complexity => O(1)
- * Reference: https://takeuforward.org/data-structure/minimum-in-rotated-sorted-array/
- * @return {number}
+ * @returns 
  */
-var findMin4 = function(nums) {
+var findMin4 = function(nums: number[]): number {
   let n = nums.length;
 
   let low = 0;
@@ -132,13 +127,12 @@ var findMin4 = function(nums) {
 };
 
 /**
- * @param {number[]} nums
+ * @param nums 
  * Time complexity => O(log(n))
  * Space complexity => O(1)
- * Reference: https://takeuforward.org/data-structure/minimum-in-rotated-sorted-array/
- * @return {number}
+ * @returns 
  */
-var findMin5 = function(nums) {
+var findMin5 = function(nums: number[]): number {
   let n = nums.length;
 
   let low = 0;
