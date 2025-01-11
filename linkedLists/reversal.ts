@@ -1,4 +1,6 @@
 /**
+ * PROBLEM LINK: https://www.greatfrontend.com/interviews/study/blind75/questions/algo/linked-list-reversal
+ * 
  * Given the head of a linked list, reverse the list and return the 
  * new head of the reversed list.
 
@@ -104,37 +106,4 @@ function reverseLinkedList3(head: ListNode | null): ListNode | null {
   }
 
   return prev;
-}
-
-// Function to convert vector to linked list
-function vectorToLinkedList(values: number[]): ListNode | null {
-  if (values.length === 0) {
-    return null; // Return null for an empty array
-  }
-
-  // Create the head node of the linked list
-  const head: ListNode = { val: values[0], next: null };
-  let current: ListNode = head;
-
-  // Iterate over the array to create the rest of the linked list
-  for (let i = 1; i < values.length; i++) {
-    current.next = { val: values[i], next: null };
-    current = current.next;
-  }
-
-  return head;
-}
-
-// Function to convert linked list to vector
-function linkedListToVector(head: ListNode | null): number[] {
-  const result: number[] = [];
-  let current: ListNode | null = head;
-
-  // Traverse the linked list and add node values to the array
-  while (current !== null) {
-    result.push(current.val);
-    current = current.next;
-  }
-
-  return result;
 }
