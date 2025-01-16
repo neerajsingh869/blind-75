@@ -50,7 +50,7 @@ var maxDepth3 = function (root) {
   return maxDepth;
 };
 
-// Time complexity -> O(n), Space complexity -> O(n)
+// Time complexity -> O(n * n), Space complexity -> O(n)
 var maxDepth3 = function (root) {
   if (root === null) return 0;
 
