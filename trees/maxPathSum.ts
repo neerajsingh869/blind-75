@@ -48,6 +48,9 @@ interface TreeNode {
   right: TreeNode | null;
 }
 
+/** Interface to represent Pair for storing
+ * maximum path sum and maximum linear path sum from root
+ */
 interface MaximumPathPair {
   maxPathSum: number;
   maxLinearPathSumFromRoot: number;
