@@ -123,7 +123,7 @@ function searchRange3(nums: number[], target: number): number[] {
       if (nums[mid] === target) {
         index = mid;
 
-        findFirst ? right = mid - 1 : left = mid + 1;
+        findFirst ? (right = mid - 1) : (left = mid + 1);
       } else if (nums[mid] > target) {
         right = mid - 1;
       } else {
