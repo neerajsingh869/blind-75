@@ -90,10 +90,10 @@ function maxLinearPathSumFromRoot(root: TreeNode | null): number {
 }
 
 /**
- * @param root 
+ * @param root
  * TC = O(n)
  * SC = O(n)
- * @returns 
+ * @returns
  */
 export default function binaryTreeMaximumPathSum2(
   root: TreeNode | null
@@ -111,27 +111,55 @@ function binaryTreeMaximumPathSumHelper(
     };
   }
 
-  const maxPathSumLeft = binaryTreeMaximumPathSumHelper(root.left);
-  const maxPathSumRight = binaryTreeMaximumPathSumHelper(root.right);
+  const maxPathSumLeftPair = binaryTreeMaximumPathSumHelper(root.left);
+  const maxPathSumRightPair = binaryTreeMaximumPathSumHelper(root.right);
 
   const maxPathSumViaRoot =
     root.val +
-    (Math.max(maxPathSumLeft.maxLinearPathSumFromRoot, 0) +
-      Math.max(maxPathSumRight.maxLinearPathSumFromRoot, 0));
+    (Math.max(maxPathSumLeftPair.maxLinearPathSumFromRoot, 0) +
+      Math.max(maxPathSumRightPair.maxLinearPathSumFromRoot, 0));
 
   const maxLinearPathSumFromRoot =
     root.val +
     Math.max(
-      maxPathSumLeft.maxLinearPathSumFromRoot,
-      maxPathSumRight.maxLinearPathSumFromRoot,
+      maxPathSumLeftPair.maxLinearPathSumFromRoot,
+      maxPathSumRightPair.maxLinearPathSumFromRoot,
       0
     );
 
   const maxPathSum = Math.max(
-    maxPathSumLeft.maxPathSum,
-    maxPathSumRight.maxPathSum,
+    maxPathSumLeftPair.maxPathSum,
+    maxPathSumRightPair.maxPathSum,
     maxPathSumViaRoot
   );
 
   return { maxPathSum, maxLinearPathSumFromRoot };
+}
+
+/**
+ * @param root
+ * TC = O(n)
+ * SC = O(n)
+ * @returns
+ */
+function binaryTreeMaximumPathSum3(root: TreeNode | null): number {
+  let maxPathSum = -Infinity;
+
+  // Closure
+  function gainFromTree(root: TreeNode | null): number {
+    if (root === null) {
+      return 0;
+    }
+
+    const gainFromLeft = Math.max(gainFromTree(root.left), 0);
+    const gainFromRight = Math.max(gainFromTree(root.right), 0);
+
+    maxPathSum = Math.max(maxPathSum, root.val + gainFromLeft + gainFromRight);
+
+    return root.val + Math.max(gainFromLeft, gainFromRight);
+  }
+
+  gainFromTree(root);
+
+  return maxPathSum;
 }
