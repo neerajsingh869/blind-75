@@ -140,7 +140,13 @@ function searchRange3(nums: number[], target: number): number[] {
   return [firstIndex, lastIndex];
 }
 
-// TODO: Write recursive way of solving the problem
+/**
+ * @param nums
+ * @param target
+ * TC = O(log(n))
+ * SC = O(1)
+ * @returns
+ */
 function searchRange4(nums: number[], target: number): number[] {
   const n = nums.length;
 
