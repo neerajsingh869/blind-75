@@ -64,38 +64,38 @@ function searchRange2(nums: number[], target: number): number[] {
   const n = nums.length;
 
   let firstIndex = -1;
-  let left = 0;
-  let right = n - 1;
+  let low = 0;
+  let high = n - 1;
 
-  while (left <= right) {
-    const mid = left + Math.floor((right - left) / 2);
+  while (low <= high) {
+    const mid = low + Math.floor((high - low) / 2);
 
     if (nums[mid] >= target) {
       if (nums[mid] === target) {
         firstIndex = mid;
       }
 
-      right = mid - 1;
+      high = mid - 1;
     } else {
-      left = mid + 1;
+      low = mid + 1;
     }
   }
 
   let lastIndex = -1;
-  left = 0;
-  right = n - 1;
+  low = 0;
+  high = n - 1;
 
-  while (left <= right) {
-    const mid = left + Math.floor((right - left) / 2);
+  while (low <= high) {
+    const mid = low + Math.floor((high - low) / 2);
 
     if (nums[mid] <= target) {
       if (nums[mid] === target) {
         lastIndex = mid;
       }
 
-      left = mid + 1;
+      low = mid + 1;
     } else {
-      right = mid - 1;
+      high = mid - 1;
     }
   }
 
@@ -114,20 +114,20 @@ function searchRange3(nums: number[], target: number): number[] {
 
   function binarySearch(findFirst: boolean): number {
     let index = -1;
-    let left = 0;
-    let right = n - 1;
+    let low = 0;
+    let high = n - 1;
 
-    while (left <= right) {
-      const mid = left + Math.floor((right - left) / 2);
+    while (low <= high) {
+      const mid = low + Math.floor((high - low) / 2);
 
       if (nums[mid] === target) {
         index = mid;
 
-        findFirst ? (right = mid - 1) : (left = mid + 1);
+        findFirst ? (high = mid - 1) : (low = mid + 1);
       } else if (nums[mid] > target) {
-        right = mid - 1;
+        high = mid - 1;
       } else {
-        left = mid + 1;
+        low = mid + 1;
       }
     }
 
