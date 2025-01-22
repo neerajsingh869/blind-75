@@ -139,3 +139,116 @@ function searchRange3(nums: number[], target: number): number[] {
 
   return [firstIndex, lastIndex];
 }
+
+// TODO: Write recursive way of solving the problem
+function searchRange4(nums: number[], target: number): number[] {
+  const n = nums.length;
+
+  // let firstIndex = findFirstIndex(nums, 0, n - 1, target);
+  // let lastIndex = findLastIndex(nums, 0, n - 1, target);
+
+  let firstIndex = findIndex(nums, true, 0, n - 1, target);
+  let lastIndex = findIndex(nums, false, 0, n - 1, target);
+
+  return [firstIndex, lastIndex];
+}
+
+// Recursive function to find first index
+function findFirstIndex(
+  nums: number[],
+  low: number,
+  high: number,
+  target: number
+): number {
+  if (low > high) {
+    return -1;
+  }
+
+  const mid = low + Math.floor((high - low) / 2);
+  let firstIndex = -1;
+  if (nums[mid] >= target) {
+    let tempFirstIndex = findFirstIndex(nums, low, mid - 1, target);
+
+    if (tempFirstIndex != -1) {
+      firstIndex = tempFirstIndex;
+    } else {
+      if (nums[mid] === target) {
+        firstIndex = mid;
+      }
+    }
+  } else {
+    firstIndex = findFirstIndex(nums, mid + 1, high, target);
+  }
+
+  return firstIndex;
+}
+
+// Recursive function to find last index
+function findLastIndex(
+  nums: number[],
+  low: number,
+  high: number,
+  target: number
+): number {
+  if (low > high) {
+    return -1;
+  }
+
+  const mid = low + Math.floor((high - low) / 2);
+  let lastIndex = -1;
+  if (nums[mid] <= target) {
+    let tempLastIndex = findLastIndex(nums, mid + 1, high, target);
+
+    if (tempLastIndex != -1) {
+      lastIndex = tempLastIndex;
+    } else {
+      if (nums[mid] === target) {
+        lastIndex = mid;
+      }
+    }
+  } else {
+    lastIndex = findLastIndex(nums, low, mid - 1, target);
+  }
+
+  return lastIndex;
+}
+
+// Recursive function to find first as well as last index
+function findIndex(
+  nums: number[],
+  findFirst: boolean,
+  low: number,
+  high: number,
+  target: number
+): number {
+  if (low > high) {
+    return -1;
+  }
+
+  let index = -1;
+
+  const mid = low + Math.floor((high - low) / 2);
+  if (nums[mid] === target) {
+    // findFirst
+    //   ? (index = findIndex(nums, findFirst, low, mid - 1, target))
+    //   : (index = findIndex(nums, findFirst, mid + 1, high, target));
+
+    index = findIndex(
+      nums,
+      findFirst,
+      findFirst ? low : mid + 1,
+      findFirst ? mid - 1 : high,
+      target
+    );
+
+    if (index === -1) {
+      index = mid;
+    }
+  } else if (nums[mid] > target) {
+    index = findIndex(nums, findFirst, low, mid - 1, target);
+  } else {
+    index = findIndex(nums, findFirst, mid + 1, high, target);
+  }
+
+  return index;
+}
