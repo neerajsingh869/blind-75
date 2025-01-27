@@ -37,7 +37,8 @@ function mySqrt1(x: number): number {
 
   for (let num = 1; num <= x; num++) {
     if (num === Math.max(x / num)) {
-      // or (mid * mid === x)
+      /** or (mid * mid === x) since division operation 
+       * is more expensive but there is chance of overflow */
       return num;
     } else if (num < Math.max(x / num)) {
       // or (mid * mid < x)
@@ -82,7 +83,8 @@ function mySqrt2(x: number): number {
 
     /** Little longer way (but more readable) */
     if (mid === Math.floor(x / mid)) {
-      // or (mid * mid === x)
+      /** or (mid * mid === x) since division operation 
+       * is more expensive but there is chance of overflow */
       return mid;
     } else if (mid < Math.floor(x / mid)) {
       // or (mid * mid < x)
