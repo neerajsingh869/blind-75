@@ -37,7 +37,7 @@ function mySqrt1(x: number): number {
 
   for (let num = 1; num <= x; num++) {
     if (num === Math.max(x / num)) {
-      /** or (mid * mid === x) since division operation 
+      /** or (mid * mid === x) since division operation
        * is more expensive but there is chance of overflow */
       return num;
     } else if (num < Math.max(x / num)) {
@@ -65,7 +65,8 @@ function mySqrt2(x: number): number {
   let ans = 1;
 
   let low = 1;
-  let high = x;
+  // let high = x;
+  let high = Math.floor(x / 2); // reduced search space
   while (low <= high) {
     const mid = low + Math.floor((high - low) / 2);
 
@@ -83,7 +84,7 @@ function mySqrt2(x: number): number {
 
     /** Little longer way (but more readable) */
     if (mid === Math.floor(x / mid)) {
-      /** or (mid * mid === x) since division operation 
+      /** or (mid * mid === x) since division operation
        * is more expensive but there is chance of overflow */
       return mid;
     } else if (mid < Math.floor(x / mid)) {
@@ -96,4 +97,34 @@ function mySqrt2(x: number): number {
   }
 
   return ans;
+}
+
+/**
+ * @param x
+ * TC = O(log(x))
+ * SC = O(1)
+ * @returns
+ */
+function mySqrt(x: number): number {
+  if (x < 2) return x; // Handle edge cases for 0 and 1
+
+  let low = 1;
+  let high = Math.floor(x / 2);
+
+  while (low <= high) {
+    const mid = low + Math.floor((high - low) / 2);
+
+    if (mid === Math.floor(x / mid)) {
+      return mid;
+    } else if (mid <= Math.floor(x / mid)) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+
+  /** high represents the largest number that
+   * can be square root of x
+   */
+  return high;
 }
