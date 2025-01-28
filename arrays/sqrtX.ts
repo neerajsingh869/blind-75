@@ -66,11 +66,12 @@ function mySqrt2(x: number): number {
 
   let low = 1;
   // let high = x;
-  let high = Math.floor(x / 2); // reduced search space
+  let high = Math.floor(x / 2); // Reduce search space
+  
   while (low <= high) {
     const mid = low + Math.floor((high - low) / 2);
 
-    /** Shorter way (little less readable) */
+    /** Shorter way (less readable) */
     // if (mid <= Math.floor(x / mid)) {
     //   if (mid === Math.floor(x / mid)) {
     //     return mid;
