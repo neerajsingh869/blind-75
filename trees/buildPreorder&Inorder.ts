@@ -53,10 +53,10 @@ function binaryTreeRebuildingFromTraversals1(
 
   if (n != m) return null;
 
-  return buildBinaryTree(preorder, 0, n - 1, inorder, 0, m - 1);
+  return buildBinaryTree1(preorder, 0, n - 1, inorder, 0, m - 1);
 }
 
-function buildBinaryTree(
+function buildBinaryTree1(
   preorder: number[],
   preStart: number,
   preEnd: number,
@@ -80,7 +80,7 @@ function buildBinaryTree(
 
   const root: TreeNode = { val: rootValue, left: null, right: null };
 
-  root.left = buildBinaryTree(
+  root.left = buildBinaryTree1(
     preorder,
     preStart + 1,
     preStart + rootInorderIndex - inStart,
@@ -89,13 +89,78 @@ function buildBinaryTree(
     rootInorderIndex - 1
   );
 
-  root.right = buildBinaryTree(
+  root.right = buildBinaryTree1(
     preorder,
     preStart + rootInorderIndex - inStart + 1,
     preEnd,
     inorder,
     rootInorderIndex + 1,
     inEnd
+  );
+
+  return root;
+}
+
+/**
+ * @param preorder
+ * @param inorder
+ * TC = O(n)
+ * SC = O(n)
+ * @returns
+ */
+function binaryTreeRebuildingFromTraversals2(
+  preorder: number[],
+  inorder: number[]
+): TreeNode | null {
+  const n = preorder.length;
+  const m = inorder.length;
+
+  if (n != m) return null;
+
+  const map = new Map<number, number>();
+  for (let i = 0; i < m; i++) {
+    map.set(inorder[i], i);
+  }
+
+  return buildBinaryTree2(preorder, 0, n - 1, inorder, 0, m - 1, map);
+}
+
+function buildBinaryTree2(
+  preorder: number[],
+  preStart: number,
+  preEnd: number,
+  inorder: number[],
+  inStart: number,
+  inEnd: number,
+  map: Map<number, number>
+): TreeNode | null {
+  if (preStart > preEnd || inStart > inEnd) {
+    return null;
+  }
+
+  const rootValue = preorder[preStart];
+  const rootInorderIndex = Number(map.get(rootValue));
+
+  const root: TreeNode = { val: rootValue, left: null, right: null };
+
+  root.left = buildBinaryTree2(
+    preorder,
+    preStart + 1,
+    preStart + rootInorderIndex - inStart,
+    inorder,
+    inStart,
+    rootInorderIndex - 1,
+    map
+  );
+
+  root.right = buildBinaryTree2(
+    preorder,
+    preStart + rootInorderIndex - inStart + 1,
+    preEnd,
+    inorder,
+    rootInorderIndex + 1,
+    inEnd,
+    map
   );
 
   return root;
