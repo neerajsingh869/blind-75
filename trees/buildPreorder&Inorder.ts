@@ -31,11 +31,13 @@
   preorder and inorder contain unique values
  */
 
-interface TreeNode {
-  val: number;
-  left: TreeNode | null;
-  right: TreeNode | null;
-}
+import { TreeNode } from "./utils";
+
+// interface TreeNode {
+//   val: number;
+//   left: TreeNode | null;
+//   right: TreeNode | null;
+// }
 
 /**
  * @param preorder
@@ -70,31 +72,33 @@ function buildBinaryTree1(
 
   const rootValue = preorder[preStart];
 
-  let rootInorderIndex = inStart;
+  // Can we find index in O(1), YES! using map
+  let inorderRootIndex = inStart;
   for (let i = inStart; i <= inEnd; i++) {
     if (inorder[i] === rootValue) {
-      rootInorderIndex = i;
+      inorderRootIndex = i;
       break;
     }
   }
 
-  const root: TreeNode = { val: rootValue, left: null, right: null };
+  // const root: TreeNode = { val: rootValue, left: null, right: null };
+  const root = new TreeNode(rootValue);
 
   root.left = buildBinaryTree1(
     preorder,
     preStart + 1,
-    preStart + rootInorderIndex - inStart,
+    preStart + inorderRootIndex - inStart,
     inorder,
     inStart,
-    rootInorderIndex - 1
+    inorderRootIndex - 1
   );
 
   root.right = buildBinaryTree1(
     preorder,
-    preStart + rootInorderIndex - inStart + 1,
+    preStart + inorderRootIndex - inStart + 1,
     preEnd,
     inorder,
-    rootInorderIndex + 1,
+    inorderRootIndex + 1,
     inEnd
   );
 
@@ -139,29 +143,137 @@ function buildBinaryTree2(
   }
 
   const rootValue = preorder[preStart];
-  const rootInorderIndex = Number(map.get(rootValue));
+  const inorderRootIndex = Number(map.get(rootValue));
 
-  const root: TreeNode = { val: rootValue, left: null, right: null };
+  // const root: TreeNode = { val: rootValue, left: null, right: null };
+  const root = new TreeNode(rootValue);
 
   root.left = buildBinaryTree2(
     preorder,
     preStart + 1,
-    preStart + rootInorderIndex - inStart,
+    preStart + inorderRootIndex - inStart,
     inorder,
     inStart,
-    rootInorderIndex - 1,
+    inorderRootIndex - 1,
     map
   );
 
   root.right = buildBinaryTree2(
     preorder,
-    preStart + rootInorderIndex - inStart + 1,
+    preStart + inorderRootIndex - inStart + 1,
     preEnd,
     inorder,
-    rootInorderIndex + 1,
+    inorderRootIndex + 1,
     inEnd,
     map
   );
 
   return root;
+}
+
+/**
+ * @param preorder
+ * @param inorder
+ * TC = O(n)
+ * SC = O(n)
+ * @returns
+ */
+function binaryTreeRebuildingFromTraversals3(
+  preorder: number[],
+  inorder: number[]
+): TreeNode | null {
+  const n = preorder.length;
+  const m = inorder.length;
+
+  if (n != m) return null;
+
+  // Create a map to store the index of each value in the inorder array for quick lookup
+  const inorderIndexMap = new Map<number, number>();
+  for (let i = 0; i < m; i++) {
+    inorderIndexMap.set(inorder[i], i);
+  }
+
+  // Closure function to recursively build the tree
+  function buildBinaryTree(
+    preStart: number,
+    preEnd: number,
+    inStart: number,
+    inEnd: number
+  ): TreeNode | null {
+    if (preStart > preEnd) {
+      return null;
+    }
+
+    const rootValue = preorder[preStart];
+    const inorderRootIndex = Number(inorderIndexMap.get(rootValue));
+    // Left tree count = inorderRootIndex - inStart
+
+    // const root: TreeNode = { val: rootValue, left: null, right: null };
+    const root = new TreeNode(rootValue);
+
+    root.left = buildBinaryTree(
+      preStart + 1,
+      preStart + inorderRootIndex - inStart,
+      inStart,
+      inorderRootIndex - 1
+    );
+
+    root.right = buildBinaryTree(
+      preStart + inorderRootIndex - inStart + 1,
+      preEnd,
+      inorderRootIndex + 1,
+      inEnd
+    );
+
+    return root;
+  }
+
+  return buildBinaryTree(0, n - 1, 0, m - 1);
+}
+
+/**
+ * @param preorder
+ * @param inorder
+ * TC = O(n)
+ * SC = O(n)
+ * @returns
+ */
+function binaryTreeRebuildingFromTraversals4(
+  preorder: number[],
+  inorder: number[]
+): TreeNode | null {
+  const n = preorder.length;
+  const m = inorder.length;
+
+  if (n != m) return null;
+
+  // Create a map to store the index of each value in the inorder array for quick lookup
+  const inorderIndexMap = new Map<number, number>();
+  for (let i = 0; i < m; i++) {
+    inorderIndexMap.set(inorder[i], i);
+  }
+
+  let preStart = 0;
+
+  // Closure function to recursively build the tree
+  function buildBinaryTree(inStart: number, inEnd: number): TreeNode | null {
+    if (inStart > inEnd) {
+      return null;
+    }
+
+    const rootValue = preorder[preStart++];
+    const inorderRootIndex = Number(inorderIndexMap.get(rootValue));
+    // Left tree count = inorderRootIndex - inStart
+
+    // const root: TreeNode = { val: rootValue, left: null, right: null };
+    const root = new TreeNode(rootValue);
+
+    root.left = buildBinaryTree(inStart, inorderRootIndex - 1);
+
+    root.right = buildBinaryTree(inorderRootIndex + 1, inEnd);
+
+    return root;
+  }
+
+  return buildBinaryTree(0, m - 1);
 }
