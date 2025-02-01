@@ -2,8 +2,8 @@
  * PROBLEM LINK: https://www.greatfrontend.com/interviews/study/blind75/questions/algo/longest-common-subsequence
  * 
  * Given two strings, str1 and str2, find the length of 
- * their longest common subsequence. If no common subsequence e
- * xists, return 0.
+ * their longest common subsequence. If no common subsequence exists, 
+ * return 0.
 
   A subsequence is a sequence derived from another sequence by 
   deleting some or no elements without changing the order of 
