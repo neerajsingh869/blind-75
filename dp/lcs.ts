@@ -123,7 +123,9 @@ function longestCommonSubsequence3(str1: string, str2: string): number {
   let m = str2.length;
 
   // Fill 0 which will work as base case later
-  let dp = new Array(n + 1).fill(0).map(() => new Array(m + 1).fill(0));
+  let dp: number[][] = new Array(n + 1)
+    .fill(0)
+    .map(() => new Array(m + 1).fill(0));
 
   for (let i = n - 1; i >= 0; i--) {
     for (let j = m - 1; j >= 0; j--) {
@@ -165,4 +167,34 @@ function longestCommonSubsequence4(str1: string, str2: string): number {
   }
 
   return dp[n][m];
+}
+
+/**
+ * @param str1
+ * @param str2
+ * TC = O(n * m)
+ * SC = O(m)
+ * @returns
+ */
+function longestCommonSubsequence5(str1: string, str2: string): number {
+  let n = str1.length;
+  let m = str2.length;
+
+  let currentRow = new Array(m + 1).fill(0);
+  let previousRow = new Array(m + 1).fill(0);
+
+  for (let i = 1; i <= n; i++) {
+    [currentRow, previousRow] = [previousRow, currentRow];
+    for (let j = 1; j <= m; j++) {
+      if (str1[i - 1] == str2[j - 1]) {
+        // dp[i][j] = 1 + dp[i - 1][j - 1];
+        currentRow[j] = 1 + previousRow[j - 1];
+      } else {
+        // dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
+        currentRow[j] = Math.max(currentRow[j - 1], previousRow[j]);
+      }
+    }
+  }
+
+  return currentRow[m];
 }
