@@ -69,10 +69,139 @@ const threeSum1 = function (nums: number[]): number[][] {
   return ans;
 };
 
+// Two sum function
+function twoSum(nums: number[], low: number, target: number): number[][] {
+  let high = nums.length - 1;
+
+  let result: number[][] = [];
+  while (low < high) {
+    if (target > 0) {
+      high--;
+    } else if (target < 0) {
+      low++;
+    } else {
+      // Found a valid triplet
+      result.push([-target, nums[low], nums[high]]);
+      low++;
+      high--;
+
+      // Skip duplicates for nums[low] and nums[high]
+      while (low < high && nums[low] === nums[low - 1]) {
+        low++;
+      }
+      while (low < high && nums[high] === nums[high + 1]) {
+        high--;
+      }
+    }
+  }
+
+  return result;
+}
+
 /**
  * @param nums 
  * TC = O(n * n)
  * SC = O(n) because of sorting
+ * @returns 
+ */
+const threeSum3 = function (nums: number[]): number[][] {
+  // Sort the array
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+
+  const result: number[][] = [];
+  // Traverse the array
+  for (let i = 0; i < n - 2; i++) {
+    // Early termination: if nums[i] > 0, no triplet can sum to 0
+    if (nums[i] > 0) {
+      break;
+    }
+
+    // Skip duplicates for nums[i]
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+
+    // Use two pointers to find answer that includes current number
+    const tempAns = twoSum(nums, i + 1, -nums[i]);
+
+    result.push(...tempAns);
+  }
+
+  return result;
+}
+
+/**
+ * @param nums 
+ * TC = O(n * n)
+ * SC = O(n) because of sorting
+ * @returns 
+ */
+const threeSum4 = function (nums: number[]): number[][] {
+  // Sort the array
+  nums.sort((a, b) => a - b);
+  const n = nums.length;
+
+  const result: number[][] = [];
+  // Traverse the array
+  for (let i = 0; i < n - 2; i++) {
+    // Early termination: if nums[i] > 0, no triplet can sum to 0
+    if (nums[i] > 0) {
+      break;
+    }
+
+    // Skip duplicates for nums[i]
+    if (i > 0 && nums[i] === nums[i - 1]) {
+      continue;
+    }
+
+    /**
+     * Create Inner function to implement
+     * two pointers approach
+     * 
+     * NOTE: The function will be re-defined everytime
+     * the loop runs so it is not optimal approach to 
+     * implement two pointers approach using function
+     */
+    function twoSum() {
+      let low = i + 1;
+      let high = nums.length - 1;
+    
+      while (low < high) {
+        const total = nums[i] + nums[low] + nums[high];
+
+        if (total > 0) {
+          high--;
+        } else if (total < 0) {
+          low++;
+        } else {
+          // Found a valid triplet
+          result.push([nums[i], nums[low], nums[high]]);
+          low++;
+          high--;
+    
+          // Skip duplicates for nums[low] and nums[high]
+          while (low < high && nums[low] === nums[low - 1]) {
+            low++;
+          }
+          while (low < high && nums[high] === nums[high + 1]) {
+            high--;
+          }
+        }
+      }
+    }
+
+    twoSum();
+  }
+
+  return result;
+}
+
+/**
+ * @param nums 
+ * TC = O(n * n)
+ * SC = O(n) because of sorting
+ * BEST APPROACH
  * @returns 
  */
 const threeSum2 = function (nums: number[]): number[][] {
